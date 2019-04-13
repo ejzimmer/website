@@ -166,16 +166,19 @@
       y = Math.random() * maxY + minY;
 
       rotation = Math.random() * 360;
+      const duration = Math.random() * 10 + 10;
 
       rocket.style.transitionProperty = 'transform';
-      rocket.style.transitionDuration = `${Math.random() * 10 + 10}s`;
+      rocket.style.transitionDuration = `${duration}s`;
       rocket.style.transform = `translate(${x}vw, ${y}vh) rotate(${rotation}deg)`;
+
+      // start firing jet halfway through current arc
+      setTimeout(() => jet.style.display = 'block', duration * 500);
     }
 
     requestAnimationFrame(() => requestAnimationFrame(moveRocket));
 
     rocket.addEventListener('transitionend', (event) => {
-      jet.style.display = 'block';
       setTimeout(moveRocket, 500);
       setTimeout(() => jet.style.display = 'none', 1000);
     });
