@@ -123,7 +123,6 @@
       border: 4px solid hsl(var(--hue), 30%, 50%);
       border-right: none;
       position: absolute;
-      transform: rotate(.12turn);
       box-shadow: inset 4px 0 3px hsl(var(--hue), 90%, 30%);  
     }
   </style>
@@ -134,42 +133,43 @@
     <div class="fins"></div>
     <div class="jet"></div>
   </div>
-  <div class="moon"></div>
+  <div class="moon">
+    <div class="crater" style="left: 18.3%; top: 5.8%; transform: scale(1.1)"></div>
+    <div class="crater" style="left: 60.9%; top: 80.8%; transform: scale(.4)"></div>
+    <div class="crater" style="left: 62.6%; top: 34.9%; transform: scale(1.9)"></div>
+    <div class="crater" style="left: 16.1%; top: 60.6%; transform: scale(1.9)"></div>
+    <div class="crater" style="left: -1.3%; top: 31.7%;"></div>
+    <div class="crater" style="left: 65.4%; top: .3%; transform: scale(.4)"></div>
+    <div class="crater" style="left: 45%; top: 70%; transform: scale(.7)"></div>
+  </div>
   <script>
     const moon = document.querySelector('.moon');
-    createCrater(18.3, 5.8, 1.1);
-    createCrater(60.9, 80.8, 0.4);
-    createCrater(62.6, 34.9, 1.9);
-    createCrater(16.1, 60.6, 1.9);
-    createCrater(-1.3, 31.7, 1);
-    createCrater(65.4, 0.3, .4);
-    createCrater(45, 70, .7);
-
     moon.style.top = `${Math.random() * 60}vw`;
     moon.style.left = `${Math.random() * 100}vh`;
 
 
-    function createCrater(left, top, size) {
-      const crater = document.createElement('div');
-      crater.classList.add('crater');
-      moon.appendChild(crater);
-      crater.style.left = `${left}%`;
-      crater.style.top = `${top}%`;
-      crater.style.transform = `scale(${size})`;      
-    }
-
     const rocket = document.querySelector('.rocket');
-    const rocketStyle = document.styleSheets[1].rules[0].style;
     const jet = rocket.querySelector('.jet');
 
+    let rotation;
+    let x = 0;
+    let y = 0;
+
     function moveRocket() {
-      const rotation = Math.random() * 360;
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight;
+      // ensure the rocket moves in vaguely the direction it's facing
+      const left = rotation > 180;
+      const [minX, maxX] = left ? [0, x] : [x, 100];
+      x = Math.random() * maxX + minX;
+
+      const up = rotation < 90 || rotation > 270;
+      const [minY, maxY] = up ? [0, y] : [y, 100];
+      y = Math.random() * maxY + minY;
+
+      rotation = Math.random() * 360;
 
       rocket.style.transitionProperty = 'transform';
       rocket.style.transitionDuration = `${Math.random() * 10 + 10}s`;
-      rocket.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+      rocket.style.transform = `translate(${x}vw, ${y}vh) rotate(${rotation}deg)`;
     }
 
     requestAnimationFrame(() => requestAnimationFrame(moveRocket));
@@ -179,6 +179,23 @@
       setTimeout(moveRocket, 500);
       setTimeout(() => jet.style.display = 'none', 1000);
     });
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: [0,1]
+    };
+    const rocketObserver = new IntersectionObserver(intersectionCallback, observerOptions);
+    rocketObserver.observe(rocket);
+
+    function intersectionCallback(entries) {
+      entries.forEach((entry) => {
+        if (entry.intersectionRatio === 0) {
+          rotation = rotation + 180;
+          rocket.style.transform = `translate(50vw, 50vh) rotate(${rotation}deg)`;
+        }
+      })
+    }
   </script>
 </body>
 </html>
