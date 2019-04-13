@@ -12,7 +12,6 @@
       --height: calc(3 * var(--width));
       display: inline-block;
       position: relative;
-      transition-timing-function: linear;
     }
     .rocket .body {
       --point: 50%;
@@ -71,26 +70,30 @@
 
     .jet {
       display: none;
-      width: 80px;
-      height: 80px;
+      --jet-size: calc(var(--width) * .8);
+      width: var(--jet-size);
+      height: var(--jet-size);
       border-radius: 50%;
       border-bottom-right-radius: 0;
       border: 1px solid hsl(30, 50%, 50%);
       background-color: orange;
       position: absolute;
-      bottom: -60px;
+      bottom: calc(var(--jet-size) * -.8);
+      left: 4px;
       transform: rotate(.125turn);
       z-index: -1;
       animation: resize 350ms both infinite;
     }
     .jet::after {
+      --size: calc(var(--jet-size) * .5);
+      --offset: calc(var(--size) * .25);
       content: '';
       display: block;
-      width: 40px;
-      height: 40px;
+      width: var(--size);
+      height: var(--size);
       border-radius: 50%;
       border-bottom-right-radius: 0;
-      transform: translate(15px, 15px);
+      transform: translate(var(--offset), var(--offset));
       background-color: red;
       border: 1px solid hsl(0, 50%, 50%);
     }
@@ -157,26 +160,24 @@
 
     const rocket = document.querySelector('.rocket');
     const rocketStyle = document.styleSheets[1].rules[0].style;
+    const jet = rocket.querySelector('.jet');
 
-    requestAnimationFrame(() => {      
+    function moveRocket() {
       const rotation = Math.random() * 360;
       const x = Math.random() * window.innerWidth;
       const y = Math.random() * window.innerHeight;
 
       rocket.style.transitionProperty = 'transform';
-      rocket.style.transitionDuration = '20s';
-      rocket.style.transform = `matrix(${Math.cos(rotation)}, ${Math.sin(rotation)}, ${Math.sin(rotation) * -1}, ${Math.cos(rotation)}, ${x}, ${y})`;
-    });
+      rocket.style.transitionDuration = `${Math.random() * 10 + 10}s`;
+      rocket.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+    }
 
-    document.querySelector('body').addEventListener('keydown', (event) => {
-      const direction = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
-      const rotation = Number(rocketStyle.getPropertyValue('--rotation').replace('turn', ''));
-      rocket.style.transitionDuration = '.1s';
+    requestAnimationFrame(() => requestAnimationFrame(moveRocket));
 
-      requestAnimationFrame(() => {
-        rocketStyle.setProperty('--rotation', `${rotation + .1 * direction}turn`);
-      });
-
+    rocket.addEventListener('transitionend', (event) => {
+      jet.style.display = 'block';
+      setTimeout(moveRocket, 500);
+      setTimeout(() => jet.style.display = 'none', 1000);
     });
   </script>
 </body>
