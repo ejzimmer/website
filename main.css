@@ -1,0 +1,10 @@
+body {
+  --black: hsl(200, 100%, 10%);
+  --star-size: 2px;
+  background-color: white;
+  background-image: 
+    repeating-radial-gradient(circle at 91% 83%, transparent, transparent var(--star-size), var(--black) var(--star-size), var(--black) 11%, transparent 11%),
+    repeating-radial-gradient(circle at 77% 22%, transparent, transparent var(--star-size), var(--black) var(--star-size), var(--black) 13%, transparent 13%, transparent calc(13% + var(--star-size)), var(--black) calc(13% + var(--star-size)), var(--black) 31%, transparent 31%);
+  margin: 0;
+  height: 100vh;
+}

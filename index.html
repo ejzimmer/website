@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Erin Zimmer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+  <style>
+    .rocket {
+      --width: 50px;
+      --height: calc(3 * var(--width));
+      display: inline-block;
+      position: relative;
+      transition-timing-function: linear;
+    }
+    .rocket .body {
+      --point: 50%;
+      --bottom: 20px 80px;
+      width: var(--width);
+      height: var(--height);
+      background: radial-gradient(circle at top, red, red 20%, white 20%);
+      border-top-left-radius: var(--point);
+      border-top-right-radius: var(--point);
+      border-bottom-right-radius: var(--bottom);
+      border-bottom-left-radius: var(--bottom);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;  
+      align-items: center;
+      box-shadow: inset -3px 0 8px #333, 1px 0 5px #333;
+    }
+    .rocket .body::before {
+      content: '';
+      --diameter: calc(var(--width) / 2);
+      width: var(--diameter);
+      height: var(--diameter);
+      background-color: hsl(200, 70%, 70%);
+      border: 3px solid hsl(200, 0%, 70%);
+      border-radius: 50%;
+      margin-top: var(--diameter);
+      box-shadow: inset 1px 1px 3px white, 1px 1px #999;
+    }
+    .fins {
+      --fin-top: 50% 100%;
+      --fin-width: calc(var(--width) * 1.8);
+      --fin-height: calc(var(--fin-width) * 2 / 3);
+      width: var(--fin-width);
+      height: var(--fin-height);
+      background-color: red;
+      border-top-left-radius: var(--fin-top);
+      border-top-right-radius: var(--fin-top);
+      position: absolute;
+      bottom: calc(var(--fin-width) / -6);
+      left: calc((var(--fin-width) - var(--width)) / -2);
+      z-index: -1;
+      box-shadow: inset 0 1px 6px #333;
+    }
+    .fins::after {
+      content: '';
+      display: block;
+      width: calc(var(--fin-width) - 2px);
+      height: calc(var(--fin-height) / 3);
+      background-color: var(--black);
+      position: absolute;
+      bottom: 0;
+      left: 1px;
+      border-top-left-radius: 50% 100%;
+      border-top-right-radius: 50% 100%;
+    }
+
+    .jet {
+      display: none;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border-bottom-right-radius: 0;
+      border: 1px solid hsl(30, 50%, 50%);
+      background-color: orange;
+      position: absolute;
+      bottom: -60px;
+      transform: rotate(.125turn);
+      z-index: -1;
+      animation: resize 350ms both infinite;
+    }
+    .jet::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border-bottom-right-radius: 0;
+      transform: translate(15px, 15px);
+      background-color: red;
+      border: 1px solid hsl(0, 50%, 50%);
+    }
+    @keyframes resize {
+      to {
+        transform: rotate(.125turn) scale(.8);
+      }
+    }
+
+    .moon {
+      --hue: 220;
+      --diameter: 200px;
+      width: var(--diameter);
+      height: var(--diameter);
+      border-radius: 50%;
+      background-color: hsl(250, 30%, 90%);
+      box-shadow: inset 10px 0 28px hsl(var(--hue), 35%, 40%);
+      position: fixed;
+    }
+    .moon .crater {
+      content: '';
+      display: block;
+      --diameter: 30px;
+      width: var(--diameter);
+      height: var(--diameter);
+      border-radius: 50%;
+      border: 4px solid hsl(var(--hue), 30%, 50%);
+      border-right: none;
+      position: absolute;
+      transform: rotate(.12turn);
+      box-shadow: inset 4px 0 3px hsl(var(--hue), 90%, 30%);  
+    }
+  </style>
+</head>
+<body>
+  <div class="moon"></div>
+  <div class="rocket">
+    <div class="body"></div>
+    <div class="fins"></div>
+    <div class="jet"></div>
+  </div>
+  <script>
+    const moon = document.querySelector('.moon');
+    createCrater(18.3, 5.8, 1.1);
+    createCrater(60.9, 80.8, 0.4);
+    createCrater(62.6, 34.9, 1.9);
+    createCrater(16.1, 60.6, 1.9);
+    createCrater(-1.3, 31.7, 1);
+    createCrater(65.4, 0.3, .4);
+    createCrater(45, 70, .7);
+
+    moon.style.top = `${Math.random() * 60}vw`;
+    moon.style.left = `${Math.random() * 100}vh`;
+
+
+    function createCrater(left, top, size) {
+      const crater = document.createElement('div');
+      crater.classList.add('crater');
+      moon.appendChild(crater);
+      crater.style.left = `${left}%`;
+      crater.style.top = `${top}%`;
+      crater.style.transform = `scale(${size})`;      
+    }
+
+    const rocket = document.querySelector('.rocket');
+    const rocketStyle = document.styleSheets[1].rules[0].style;
+
+    requestAnimationFrame(() => {      
+      const rotation = Math.random() * 360;
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+
+      rocket.style.transitionProperty = 'transform';
+      rocket.style.transitionDuration = '20s';
+      rocket.style.transform = `matrix(${Math.cos(rotation)}, ${Math.sin(rotation)}, ${Math.sin(rotation) * -1}, ${Math.cos(rotation)}, ${x}, ${y})`;
+    });
+
+    document.querySelector('body').addEventListener('keydown', (event) => {
+      const direction = event.key === 'ArrowLeft' ? -1 : event.key === 'ArrowRight' ? 1 : 0;
+      const rotation = Number(rocketStyle.getPropertyValue('--rotation').replace('turn', ''));
+      rocket.style.transitionDuration = '.1s';
+
+      requestAnimationFrame(() => {
+        rocketStyle.setProperty('--rotation', `${rotation + .1 * direction}turn`);
+      });
+
+    });
+  </script>
+</body>
+</html>
