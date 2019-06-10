@@ -6,12 +6,13 @@
   <title>Erin Zimmer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+  <link href="https://fonts.googleapis.com/css?family=Audiowide|Caveat|Economica&display=swap" rel="stylesheet">
   <style>
     .rocket {
       --width: 50px;
       --height: calc(3 * var(--width));
       display: inline-block;
-      position: relative;
+      position: fixed;
     }
     .rocket .body {
       --point: 50%;
@@ -128,63 +129,6 @@
   </style>
 </head>
 <body>
-  <main>
-    <table style="display: none">
-      <thead>
-        <tr><th>Conference Talks</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>NG-MY</td><td>Kuala Lumpur</td><td>July, 2019</td>
-          <td>Upgrading your AngularJS app, without the tears</td>
-        </tr>
-        <tr>
-          <td>iJS</td><td>London</td><td>May, 2019</td>
-          <td>How to drag your AngularJS app into the future</td>
-        </tr>
-        <tr>
-          <td>iJS</td><td>London</td><td>May, 2019</td>
-          <td>Web components. It’s about time.</td>
-        </tr>
-        <tr>
-          <td>Linux Conf Australia</td><td>Christchurch</td><td>January, 2019</td>
-          <td>Autopsy of a browser</td>
-        </tr>
-        <tr>
-          <td>GDG Web & Android</td><td>Melbourne</td><td>October, 2018</td>
-          <td>Web components. It’s about time.</td>
-        </tr>
-        <tr>
-          <td>YOW! Perth</td><td>Perth</td><td>September, 2018</td>
-          <td>Adventures of the Event Loop</td>
-        </tr>
-        <tr>
-          <td>Web Directions Code</td><td>Melbourne</td><td>August, 2018</td>
-          <td>Further adventures of the Event Loop</td>
-        </tr>
-        <tr>
-          <td>Angular Australia</td><td>Melbourne</td><td>June, 2018</td>
-          <td>Angular, the event loop & you</td>
-        </tr>
-        <tr>
-          <td>JSConf EU</td><td>Berlin</td><td>June, 2018</td>
-          <td>Further adventures of the Event Loop</td>
-        </tr>
-        <tr>
-          <td>BuzzConf</td><td>Melbourne</td><td>December, 2017</td>
-          <td>How much does Siri really understand?</td>
-        </tr>
-        <tr>
-          <td>Developer! Developer! Developer!</td><td>Melbourne</td><td>August, 2017</td>
-          <td>Git. WTF is it doing anyway?</td>
-        </tr>
-        <tr>
-          <td>Web Directions Code</td><td>Melbourne</td><td>August, 2017</td>
-          <td>Await better async code no longer</td>
-        </tr>
-      </tbody>
-    </table>
-  </main>
   <div class="rocket">
     <div class="body"></div>
     <div class="fins"></div>
@@ -199,7 +143,62 @@
     <div class="crater" style="left: 65.4%; top: .3%; transform: scale(.4)"></div>
     <div class="crater" style="left: 45%; top: 70%; transform: scale(.7)"></div>
   </div>
-
+  <main>
+      <article>
+        <h2>Talks</h2>
+        <ul>
+          <li>
+            <span class="event">iJS</span> London, May, 2019
+            <div class="title">How to drag your AngularJS app into the future</div>
+          </li>
+          <li>
+            <span class="event">iJS</span> London, May, 2019
+            <div class="title">Web components. It’s about time.</div>
+          </li>
+          <li>
+            <span class="event">Linux Conf Australia</span> Christchurch, January, 2019
+            <div class="title">Autopsy of a browser</div class="title">
+          </li>
+          <li>
+            <span class="event">GDG Web & Android</span> Melbourne, October, 2018
+            <div class="title">Web components. It’s about time.</div>
+          </li>
+          <li>
+            <span class="event">YOW! Perth</span> Perth, September, 2018
+            <div class="title">Adventures of the Event Loop</div>
+          </li>
+          <li>
+            <span class="event">Web Directions Code</span> Melbourne, August, 2018
+            <div class="title">Further adventures of the Event Loop</div>
+          </li>
+          <li>
+            <span class="event">Angular Australia</span> Melbourne, June, 2018
+            <div class="title">Angular, the event loop & you</div>
+          </li>
+          <li>
+            <span class="event">JSConf EU</span> Berlin, June, 2018
+            <div class="title">Further adventures of the Event Loop</div>
+          </li>
+          <li>
+            <span class="event">BuzzConf</span>Melbourne, December, 2017
+            <div class="title">How much does Siri really understand?</div>
+          </li>    
+          <li>
+            <span class="event">Developer! Developer! Developer!</span>, Melbourne, August 2017
+            <div class="title">Git. WTF is it doing anyway?</div>
+          </li>  
+          <li>
+            <span class="event">Web Directions Code</span>, Melbourne, August 2017
+            <div class="title">Await better async code no longer</div>
+          </li>
+          <li class="upcoming">
+            <span class="event">NG-MY</span> Kuala Lumpur, July, 2019
+            <div class="title">Upgrading your AngularJS app, without the tears</div>
+          </tr>
+        </ul>
+      </article>
+    </main>
+  
   <script>
     const moon = document.querySelector('.moon');
     moon.style.top = `${Math.random() * 60}vw`;
