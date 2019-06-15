@@ -16,7 +16,7 @@ main {
 
 article {
   --article-background: hsla(200, 80%, 80%, .3);
-  --shine: hsla(0, 0%, 100%, .6) 90%;
+  --shine: hsla(0, 0%, 100%, .6);
   --main-colour: hsl(49, 96%, 50%);
   color: var(--main-colour);
   background: var(--article-background);
@@ -79,12 +79,37 @@ a:hover::after, a:focus::after {
   color: var(--main-colour);
 }
 
+.twitter {
+  position: absolute;
+  right: 40px;
+  top: 40px;
+  font-size: 2em;
+  text-decoration: none;
+}
+.twitter:hover {
+  animation: whoosh .4s ease-in;
+  color: var(--main-colour);
+}
+
+@keyframes whoosh {
+  from {
+    text-shadow: -3px 1px 2px var(--shine);
+  }
+  50% {
+    text-shadow: 1px 3px 2px var(--shine);
+  }
+  to {
+    text-shadow: 3px 1px 2px var(--shine);
+  }
+}
+
 .talks {
   display: grid;
   grid-template-columns: repeat(auto-fill, 400px);
   grid-column-gap: 40px;
   width: 100%;
   max-width: 850px;
+  grid-column: 1 / -1;
 }
 .event {
   font-weight: bold;
