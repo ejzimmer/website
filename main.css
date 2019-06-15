@@ -30,7 +30,7 @@ article {
   margin: auto;
   max-width: max-content;
 }
-article::after {
+article::before {
   content: '';
   display: block;
   width: 100%;
@@ -38,6 +38,7 @@ article::after {
   position: absolute;
   bottom: -16px;
   right: -16px;
+  z-index: -1;
   background: linear-gradient(135deg,
     transparent,
     transparent 90%,
@@ -68,12 +69,38 @@ li {
   margin-bottom: .75em;
 }
 
+a {
+  color: inherit;
+}
+a:hover, a:focus {
+  color: hsl(49, 96%, 30%);
+}
+a:hover::after, a:focus::after {
+  color: var(--main-colour);
+}
+
+.talks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 400px);
+  grid-column-gap: 40px;
+  width: 100%;
+  max-width: 850px;
+}
 .event {
   font-weight: bold;
 }
 .title {
   font-style: italic;
   font-weight: bold;
+}
+.talks a {
+  font-size: .9em;
+  display: inline-block;
+}
+.talks a:not(:last-of-type)::after {
+  content: '|';
+  margin-left: .25em;
+  display: inline-block;
 }
 
 .upcoming {
