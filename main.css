@@ -28,7 +28,7 @@ article {
   position: relative;
   font-family: Economica, sans-serif;
   margin: auto;
-  max-width: max-content;
+  max-width: 850px;;
 }
 article::before {
   content: '';
@@ -108,7 +108,6 @@ a:hover::after, a:focus::after {
   grid-template-columns: repeat(auto-fill, 400px);
   grid-column-gap: 40px;
   width: 100%;
-  max-width: 850px;
   grid-column: 1 / -1;
 }
 .event {
